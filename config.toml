@@ -15,7 +15,7 @@ googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
 
 [Params]
-  homeTitle = "Security Blog"
+  homeTitle = "Omega-coder's Blog"
   subtitle = "Just Another Security Oriented Blog."
   logo = "img/profile_pic.jpg" # Expecting square dimensions
   favicon = "img/favicon.ico"
