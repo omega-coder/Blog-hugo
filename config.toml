@@ -22,6 +22,7 @@ publishdir = "omega-coder.github.io"
   dateFormat = "January 2, 2006"
   commit = false
   rss = true
+  since = 2019
   comments = true
   readingTime = true
   wordCount = true
