@@ -7,7 +7,7 @@ metaDataFormat = "yaml"
 pygmentsStyle = "trac"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
-pygmentsCodefencesGuessSyntax = true
+#pygmentsCodefencesGuessSyntax = true
 #pygmentsUseClassic = true
 #pygmentOptions = "linenos=inline"
 disqusShortname = "omega-coder"
@@ -79,4 +79,22 @@ publishdir = "omega-coder.github.io"
     name = "About"
     url = "page/about/"
     weight = 3
+
+[[Params.bigimg]]
+    src  = "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_58/v1550264353/ComputerAsFuck.jpg"
+    desc = "Q29tcHV0ZXJBc0Z1Y2sK"
+
+[[Params.bigimg]]
+    src  = "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_64/v1550264352/Busted.jpg"
+    desc = "QnVzdGVkCg=="
+
+[[Params.bigimg]]
+    src  = "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_50/v1550263808/3395266-python-wallpapers.jpg"
+    desc = "Q2hlc3MgaXMgbG92ZQo="
+
+[[Params.bigimg]]
+    src  = "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_60/v1550264352/Hanging.jpg"
+    desc = "SGFuZ2luZwo="
+
+
 
