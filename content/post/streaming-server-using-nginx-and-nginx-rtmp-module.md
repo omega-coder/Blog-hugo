@@ -3,7 +3,6 @@ title: "Streaming server using NGINX and nginx-rtmp-module"
 author: "CHERIEF Yassine"
 date: 2018-12-18T01:55:45+02:00
 subtitle: "Setting up HLS + VoD streaming server"
-image: "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_77/v1545163092/nginx.png"
 bigimg: [{"src": "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_77/v1545163092/nginx.png", "desc":"Streaming using NGINX"}]
 tags: ["nginx", "streaming", "tutorial"]
 ---
