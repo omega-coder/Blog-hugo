@@ -79,7 +79,7 @@ we now need to convert to `Raw bytes` and make a gopher payload link.
 
 - **making a gopher payload link.**
 
-To do so all we need to do is precced each byte with an `&` symbol.
+To do so all we need to do is precced each byte with an `%` symbol.
 
 here is a script to do it with python.
 
