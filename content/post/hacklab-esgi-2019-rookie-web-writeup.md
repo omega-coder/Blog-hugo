@@ -24,7 +24,7 @@ So, as soon as we visit the given URL, we get a simple web page saying `Website 
 
 ![super_curling_webpage](https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1554752661/super_curling.png)
 
-If we provide `www.google.com` as input, we get the content of google displayed to us.So I started playing with the input to see if I can cause some undefined behaviour.  
+If we provide `www.google.com` as input, we get the content of google displayed to us.So I started playing with the input to see if I can get some unexpected output.  
 
 Let's try to access `/etc/passwd`, we will use the `file` protocol to do so, we can get access to local files with curl using the file protocol.    
 **`input: file:///etc/passwd`**  
@@ -48,7 +48,7 @@ We notice an interesting comment,
 // TODO: MySQL connection with "tiix" user and adding a MySQL password...
 ```
 
-We have a mysql user `tiix` with no username!!.
+We have a mysql user `tiix` with no password!!.
 
 let's use `gopher` protocol and build a GREAT payload to connect to the database as `tiix` user.
 
