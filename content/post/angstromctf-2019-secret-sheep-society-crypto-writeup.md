@@ -108,7 +108,7 @@ class Manager:
 4. pad data and encrypt it with `AES_CBC`.
 5. return `base64(iv + enc)`.
 
-> **`Note: iv is not encrypted, the IV is the first 16 bytes of the encryption`**
+> **`Note: iv is not encrypted, the IV is the first 16 bytes of the token found in cookie`**
 
 Our string representation of the session json object is as follow: 
 
