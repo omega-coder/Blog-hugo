@@ -1,18 +1,17 @@
 baseurl = "https://omega-coder.me"
 DefaultContentLanguage = "en"
-#DefaultContentLanguage = "en"
 title = "0m3g4K0d3r's Security Blog"
 theme = "beautifulhugo"
 metaDataFormat = "yaml"
 pygmentsStyle = "trac"
 pygmentsUseClasses = true
 pygmentsCodeFences = true
-#pygmentsCodefencesGuessSyntax = true
-#pygmentsUseClassic = true
-#pygmentOptions = "linenos=inline"
 disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
+
+
+
 
 [Params]
   homeTitle = "Omega-coder's Blog"
