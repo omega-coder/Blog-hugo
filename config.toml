@@ -10,9 +10,6 @@ disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
 
-
-
-
 [Params]
   homeTitle = "Omega-coder's Blog"
   subtitle = "Just Another Security Oriented Blog."
@@ -29,7 +26,7 @@ publishdir = "omega-coder.github.io"
   socialShare = true
   delayDisqus = true
   showRelatedPosts = true
-#  gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+# gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
 #[[Params.bigimg]]
 #  src = "img/triangle.jpg"
@@ -71,8 +68,7 @@ publishdir = "omega-coder.github.io"
 
 [[menu.main]]
     name = "Blog"
-    url = ""
-    weight = 1
+    weight = 1 
 
 [[menu.main]]
     name = "About"
