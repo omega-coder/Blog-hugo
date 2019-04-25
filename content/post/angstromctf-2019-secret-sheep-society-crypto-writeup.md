@@ -22,7 +22,7 @@ categories: ["security", "writeups"]
 
 | **Category**  | **Points** | **Solves** |
 |-----------|--------|--------|
-| Crypto | 120    | 0     |
+| Crypto | 120    |  98    |
 
 <hr>
 
