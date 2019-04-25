@@ -2,6 +2,7 @@
 title: "AngstromCTF 2019 Secret Sheep Society | CTF Writeup"
 author: "CHERIEF Yassine"
 date: 2019-04-24
+image: "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_40/v1556114028/082113_1459_cbcbyteflip3.jpg"
 subtitle: "AES CBC Mode bit-flipping attack"
 tags: ["ctf", "crypto", "bit-flipping", "aes", "security"]
 categories: ["security", "writeups"]
