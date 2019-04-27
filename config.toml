@@ -3,17 +3,17 @@ DefaultContentLanguage = "en"
 title = "0m3g4K0d3r's Security Blog"
 theme = "beautifulhugo"
 metaDataFormat = "yaml"
-#pygmentsStyle = "fruity"
+#pygmentsStyle = "trac"
 #pygmentsUseClassic=true
-pygmentsUseClasses = true
+#pygmentsUseClasses = true
 pygmentsCodeFences = true
-pygmentsCodefencesGuessSyntax = true
+#pygmentsCodefencesGuessSyntax = true
+pygmentOptions="linenos=inline"
 disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
 
 [Params]
-  
   homeTitle = "Omega-coder's Blog"
   subtitle = "Just Another Security Oriented Blog."
   logo = "img/profile_pic.jpg" # Expecting square dimensions
@@ -25,9 +25,9 @@ publishdir = "omega-coder.github.io"
   comments = true
   readingTime = true
   wordCount = true
-  #useHLJS = true
+  useHLJS = true
   socialShare = true
-  delayDisqus = true
+  #delayDisqus = true
   showRelatedPosts = true
 # gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
@@ -72,6 +72,12 @@ publishdir = "omega-coder.github.io"
 [[menu.main]]
     name = "Blog"
     weight = 1 
+
+[[menu.main]]
+    name = "Categories"
+    weight = 2
+    url = "/categories"
+
 
 [[menu.main]]
     name = "About"
