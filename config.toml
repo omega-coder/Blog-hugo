@@ -3,14 +3,17 @@ DefaultContentLanguage = "en"
 title = "0m3g4K0d3r's Security Blog"
 theme = "beautifulhugo"
 metaDataFormat = "yaml"
-pygmentsStyle = "trac"
+#pygmentsStyle = "fruity"
+#pygmentsUseClassic=true
 pygmentsUseClasses = true
 pygmentsCodeFences = true
+pygmentsCodefencesGuessSyntax = true
 disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
 
 [Params]
+  
   homeTitle = "Omega-coder's Blog"
   subtitle = "Just Another Security Oriented Blog."
   logo = "img/profile_pic.jpg" # Expecting square dimensions
@@ -22,7 +25,7 @@ publishdir = "omega-coder.github.io"
   comments = true
   readingTime = true
   wordCount = true
-  useHLJS = true
+  #useHLJS = true
   socialShare = true
   delayDisqus = true
   showRelatedPosts = true
