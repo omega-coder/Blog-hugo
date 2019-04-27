@@ -6,7 +6,7 @@ metaDataFormat = "yaml"
 #pygmentsStyle = "trac"
 #pygmentsUseClassic=true
 #pygmentsUseClasses = true
-pygmentsCodeFences = true
+#pygmentsCodeFences = true
 #pygmentsCodefencesGuessSyntax = true
 pygmentOptions="linenos=inline"
 disqusShortname = "omega-coder"
