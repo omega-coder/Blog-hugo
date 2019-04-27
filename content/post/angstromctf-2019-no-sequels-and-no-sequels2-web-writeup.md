@@ -2,6 +2,7 @@
 title: "AngstromCTF 2019 | No SEQUELS and No SEQUELS 2 Web Writeup"
 author: "CHERIEF Yassine (omega_coder)"
 date: 2019-04-26T01:49:01+02:00
+image: "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_49/v1556407284/Screenshot_2019-04-28_01-17-11.png"
 subtitle: "Mongodb Authentification bypass and Blind Injection"
 tags: ["ctf", "nosql", "mongodb", "nosql-injection", "web", "writeup"]
 categories: ["writeups", "security"]
