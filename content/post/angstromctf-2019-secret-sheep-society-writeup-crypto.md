@@ -56,7 +56,7 @@ we have three important routes `/`, `/enter` and `/exit`.
 
 let's see this piece of code:
 
-```
+```python
 @app.route('/enter', methods=['POST'])
 def enter():
 	handle = request.form.get('handle')
@@ -79,7 +79,7 @@ Let's see now how does the pack method works. (.pack is defined in `manage.py fi
 
 
 
-```
+```python
 class Manager:
 
 	BLOCK_SIZE = AES.block_size
@@ -109,7 +109,7 @@ Our string representation of the session json object is as follow:
 
 This is the default json object string repr that we will have, provided that we enter `xx` as handle paramter. (Only an example).
 
-```
+```json
 {"admin": false, "handle": "xx"}
 ```
 
@@ -172,7 +172,7 @@ if req.status_code == 302: # means we are being redirected to /
 Now let's see the full script that will get a token from `/enter` and manipulate it and send it back to man route (index.html) to get the final flag.
 
 
-```
+```python
 import requests
 from base64 import b64encode, b64decode
 import re
