@@ -8,7 +8,7 @@ metaDataFormat = "yaml"
 #pygmentsUseClasses = true
 #pygmentsCodeFences = true
 #pygmentsCodefencesGuessSyntax = true
-pygmentOptions="linenos=inline"
+#pygmentOptions="linenos=inline"
 disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
 publishdir = "omega-coder.github.io"
@@ -25,11 +25,11 @@ publishdir = "omega-coder.github.io"
   comments = true
   readingTime = true
   wordCount = true
-  useHLJS = true
+  #useHLJS = true
   socialShare = true
   #delayDisqus = true
   showRelatedPosts = true
-# gcse = "012345678901234567890:abcdefghijk" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
+  gcse = "003875270731666154786:4mbkqyjjjjy" # Get your code from google.com/cse. Make sure to go to "Look and Feel" and change Layout to "Full Width" and Theme to "Classic"
 
 #[[Params.bigimg]]
 #  src = "img/triangle.jpg"
