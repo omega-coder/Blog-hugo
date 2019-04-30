@@ -41,14 +41,14 @@ This simple authentication uses `JWT` (JSON Web Tokens), trying to hack the toke
 
 After reading the code, this is clearly a NoSQL Injection because of unsanitized user input.
 
-The following two lines show that the variables username and password are not sanitized by anyway.
+The following two lines show that the variables username and password are not sanitized in any way.
 
 ```js
 var user = req.body.username;
 var pass = req.body.password;
 ```
 
-One more thing to notice, the line below show that the body can be parser using json regarded that we supply some json input with `Content-Type: application/json`.
+One more thing to notice, the line below show that the body can be parsed using json regarded that we supply some json input with `Content-Type: application/json`.
 
 ```js
 app.use(bodyParser.json());
@@ -144,7 +144,7 @@ if req.status_code == 200:
 
 Let's see the solution for NoSEQUELS 2
 
-if we copy the last token we got after sending the json payload, we can now request **`/site`** (using a GET request of course) and we are presented with the following page.
+If we copy the last token we got after sending the json payload, we can now request **`/site`** (using a GET request of course) and we are presented with the following page.
 
 ![site_page](https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1556487393/1_zD92g6-1Z1HnRlHcfkrbBg.png)
 
@@ -249,31 +249,3 @@ if m:
 An here is the flag: **`actf{still_no_sql_in_the_sequel}`**
 
 Thanks for reading! :D 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
