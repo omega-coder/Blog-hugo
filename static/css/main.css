@@ -671,21 +671,23 @@ h4.panel-title > span.badge {
 
 table {
   padding: 0;
+  color: #fdfffc;
 }
 table tr {
   border-top: 1px solid #cccccc;
-  background-color: #ffffff;
+  background-color: none;
   margin: 0;
   padding: 0;
 }
 table tr:nth-child(2n) {
-  background-color: #f8f8f8;
+  background-color: none;
 }
 table tr th {
   font-weight: bold;
   border: 1px solid #cccccc;
   text-align: left;
   margin: 0;
+  color: #e71d36;
   padding: 6px 13px;
 }
 table tr td {
