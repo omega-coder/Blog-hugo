@@ -83,6 +83,7 @@
 <script> $(document).ready(function() {$("pre.chroma").css("padding","0");}); </script>
 {{- end -}}
 <script> renderMathInElement(document.body); </script>
+<script src="{{ "js/prism.js" | absURL  }}"></script>
 
 {{- if .Site.Params.selfHosted -}}
 <script src="{{ "js/photoswipe.min.js" | absURL }}"></script>
