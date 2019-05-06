@@ -826,13 +826,13 @@ code {
 }
 
 code, pre {
-    font-size: 82%;
+    font-size: 85%;
 }
 
 code[class*="language-"], pre[class*="language-"] {
     border: none;
-    border-radius: 0px;
+    border-radius: 2px;
     background-color: #14172b;
-    font-size: 82%;
+    font-size: 85%;
 }
 
