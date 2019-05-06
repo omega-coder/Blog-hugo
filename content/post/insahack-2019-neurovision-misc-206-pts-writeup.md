@@ -4,7 +4,7 @@ author: "CHERIEF Yassine (omega_coder)"
 date: 2019-05-06T14:19:30+02:00
 subtitle: "Neural Network weights visualization"
 image: "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_33/v1557149191/1_0FlvitTZnPKh8qkJ7UPLeQ.png"
-bigimg: [{"src": "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_20/v1557149191/1_0FlvitTZnPKh8qkJ7UPLeQ.png", "desc": "Neural Nets"}]
+bigimg: [{"src": "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_20/v1557149191/1_0FlvitTZnPKh8qkJ7UPLeQ.png", "desc": "Neural Nets"}, {"src": "https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_50/v1557156516/neuro.png", "desc": "Solution for challenge script"}]
 tags: ["neural-network", "image", "hdf5", "INS'HACK"]
 categories: ["security", "writeups", "INShAck", "misc"]
 ---
@@ -171,6 +171,7 @@ Greetz to [@youben11](https://github.com/youben11) for his `great` ideas and con
 ## SOLUTION #2 WILL BE POSTED LATER
 
 
+THIS WILL BE MUCH MORE INTERESTING!
 
 
 
