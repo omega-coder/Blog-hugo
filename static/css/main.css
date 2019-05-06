@@ -6,7 +6,7 @@ body {
   color: #fdfffc;
   position: relative;
   display: flex;
-  background-color: #030a0f;
+  background-color: #0d0c10;
   flex-flow: column;
   height: 100vh;
 }
@@ -826,13 +826,13 @@ code {
 }
 
 code, pre {
-    font-size: 90%;
+    font-size: 82%;
 }
 
 code[class*="language-"], pre[class*="language-"] {
     border: none;
     border-radius: 0px;
     background-color: #14172b;
-    font-size: 90%;
+    font-size: 82%;
 }
 
