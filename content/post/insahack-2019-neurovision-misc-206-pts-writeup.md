@@ -168,10 +168,154 @@ Greetz to [@youben11](https://github.com/youben11) for his `great` ideas and con
 `INSA{0v3erfitt3d_th3_Fl4g!}`
 
 
-## SOLUTION #2 WILL BE POSTED LATER
+## SOLUTION #2
 
 
-THIS WILL BE MUCH MORE INTERESTING!
+`This solution generates a random image in a certain way so that the output layer (Which is a scalar output) of our neural network converges to the output we want`
+
+
+We already stated in Solution #1 that the output is a value in this interval `[0, 1]` (*Could be interpreted as a probability*)
+
+So, We have a keras model (.hdf5 file) for a neural network with a single scalar output, for which the activation function is `sigmoid`, so the output is just the result of the `sigmoid` function applied to the `weighted sum` of the input layer which appears to be an image with the size of `68x218`, at least it is a 2D array of size 68 by 218.
+
+### <u>About the sigmoid function</u>
+
+![sigmoid_function_plot](https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1557190466/3-s2.0-B9780080499451500083-f03-02-9780080499451.jpg)
+
+A **sigmoid** function is a mathematical function having a characteristic **"S"-shaped** curve or sigmoid curve. Often, sigmoid function refers to the special case of the **logistic function** shown in the above figure and defined by the formula,
+
+$$ S(x) = \frac{1}{1 + e^{-x}} = \frac{e^x}{1 + e^x} $$
+
+#### <u>When to use Sigmoid Activation Function ?</u>
+
+One of the **main reasons** to use the `sigmoid function` is because it exists in between `0` and `1`. Thus, it is especially used for models where we have to predict the `probability` as an output.Since the probability of anything exists between `0` and `1`, then Sigmoid is the best choice.
+
+`NOTE: the use of a logistic sigmoid function can cause a neural network to get stuck at the training`
+
+
+As we said above, we will be generating random image and changing it so that the output of our neural network converges to `1` which is our desired value (`Probability of 1 that the flag image is correct`).
+
+### <u>How do we know how to change the image ?</u>
+
+We will be calculating the `Gradient` of our first layer, this way we know how to evolve the image so we can get an output that `converges to 1` which is our desired value.
+
+Image is changed using the equation below, 
+
+$$ ImageMatrix = ImageMatrix - (Gradient * learning rate) $$
+
+$$ ImageMatrix \quad -=\quad(Gradient * learning rate) $$
+
+
+### <u>Let's code the solution</u>
+
+Let's start by loading our model and defining our input and output layers.
+
+```python
+import keras
+from keras.models import load_model
+
+model = load_model('neurovision-2d327377b559adb7fc04e0c3ee5c950c')
+in_layer = model.layers[0].input    #input layer shape=(?, 68, 218)
+out_layer = model.layers[1].output  #output layer shape=(?, 1)
+```
+
+Now, we need to define the gradient and cost functions using keras predefined function
+
+```python
+
+from keras.losses import mean_squared_error
+from keras import backend
+"""
+COST FUNCTION
+cost function is defined as the mean squared error of the output
+layer and the value 1 which our desired value
+"""
+cost = mean_squared_error(out_layer, 1)
+
+"""
+GRADIENT FUNCTION
+Gradient function is defined with parameters cost function and 
+our model input layer
+We will use keras backend to define the gradients.
+"""
+grad = backend.gradients(cost, in_layer)[0]
+
+"""
+WE WILL DEFINE A FUNCTION TO RETURN COST AND GRADIENT
+WHEN INPUT IS FED
+"""
+get_cost_and_grad = backend.function([in_layer], [cost, grad])
+```
+
+Now, the cost and gradient having been defined, let's create a random image using numpy and iterate to modify the first image and until achieving a `target cost` that we will be defining below.
+
+```python
+# generate a random image using numpy
+image = np.random.rand(1, 68, 218)
+desired_cost = 0.1  # define the target cost
+lr = 1000           # set learning rate to 1000, ti will get good results
+im_count = 0        # this is used to keep count of intermediate images
+
+while True:
+  # get cost and gradient values
+  cost_, grad_ = get_cost_and_grad([image])
+  
+  if cost_ < desired_cost:
+    break
+  # alter image so output converges to 1
+  image -= (grad_ * lr)
+  # save image (not nessessary)
+  im = Image.fromarray(((image).astype(np.uint8) * 255).reshape(68, 218))
+  im.save("pngs/out_"+str(im_count)+".png")
+  im_count += 1
+```
+
+The above code will save save all intermediate images as PNG images, You will find your flag in some of the images at an advanced iteration level.
+
+A Better solution to make a `GIF` that show how the flag evolves during time.Here is the code for it. Just make sure you have `Pillow` installed.
+
+```python
+"""
+Imports of previous codes here
+"""
+import keras
+from PIL import Image
+from numpy import numpy
+
+# generate a random image.
+image = np.random.rand(1, 68, 218).astype(np.float32)
+desired_cost = 0.1    # desired cost is gonna be 0.1
+lr = 1000             # Set the learning rate to 1000
+
+images_list = [] # make a list to store image instances
+
+"""
+Iterate until calculated cost <= taegeted_cost
+"""
+while True:
+  # claculate both cost an gradient
+  cost_, grad_ = get_cost_and_grad([image])
+  if cost_ < desired_cost:
+    break
+  
+  # updating image matrix
+  image -= (grad_ * lr)
+  # reshaping image to be stored (Needs Pillow)
+  im = Image.fromarray(((image).astype(np.uint8) * 255).reshape(68, 218))
+  images_list.append(im)
+
+images_list[0].save("animated_flag.gif", save_all=True, append_images=images_list[1:], duration=100, loop=0)
+
+```
+The above code will generate a `GIF` showing the evolution of the flag starting from a random image to a full `flag`.
+
+![animated_flag](https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1557400189/animated_flag.gif)
+
+
+I will include the whole python script later.
+
+Thanks for Reading !
+
 
 
 
