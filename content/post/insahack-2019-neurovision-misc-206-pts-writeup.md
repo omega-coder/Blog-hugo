@@ -25,7 +25,7 @@ categories: ["security", "writeups", "INShAck", "misc"]
 
 # 2. SOLUTION #1
 
-We re given an `HDF5` filename named `neurovision-2d327377b559adb7fc04e0c3ee5c950c`, executing `file` command will tell us its an `HDF5` file
+We are given an `HDF5` file named `neurovision-2d327377b559adb7fc04e0c3ee5c950c`, executing the `file` command will tell us its an `HDF5` file.
 
 ```bash
 file neurovision-2d327377b559adb7fc04e0c3ee5c950c
@@ -36,7 +36,7 @@ neurovision-2d327377b559adb7fc04e0c3ee5c950c: Hierarchical Data Format (version 
 > For More on HDF5 structure  [HERE](https://en.wikipedia.org/wiki/Hierarchical_Data_Format)
 
 
-executing `strings` on the model file (I believe its a model), we get the following, 
+executing `strings` on the model file (I believe its a model), we get the following:
 
 ![strings_command_results](https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1557152375/Screenshot_2019-05-06_15-42-46.png)
 
@@ -87,11 +87,11 @@ some interesting infos.
     }
 }
 ```
-We have the input size which seems to be taking a 2-dimentional array (68x218) and outputs a single number between `0` and `1`, so we can guess that the model takes a 68x218 image and outputs some kind of `probability maybe.`, one more thing, we are dealing with a single layer Neural Network. (`No Hidden Layers`).
+We have the input size which seems to be taking a 2-dimentional array (68x218) and outputs a single number between `0` and `1`, so we can guess that the model takes a 68x218 image and outputs some kind of `probability maybe`. one more thing, we are dealing with a single layer Neural Network (`No Hidden Layers`).
 
-this is clearly a [`Keras`](https://keras.io/) Model. Let's load the model using Keras library and see wat we can do.
+this is clearly a [`Keras`](https://keras.io/) Model. Let's load the model using the Keras python library and see wat we can do.
 
-If anyone does not have keras Library installed on PC, you can work in [Colab](https://colab.research.google.com/), just open a Python3 notebook and start using Keras and many other libraries
+If you don't have the Keras Library installed on PC, you can work in [Colab](https://colab.research.google.com/), just open a Python3 notebook and start using Keras and other python libraries.
 
 `NOTE: Pillow and numpy are also required if you are using your own computer`
 
@@ -104,7 +104,7 @@ from keras import load_model
 model = load_model("neurovision-2d327377b559adb7fc04e0c3ee5c950c")
 ```
 
-Let's check layers;
+Let's check the layers;
 
 ```python
 >>> model.layers
@@ -115,7 +115,8 @@ Let's check layers;
 (None, 1)
 ```
 
-What about the weights,
+What about the weights
+
 ```python
 >>> model.get_weights()
 [array([[-4.2567684e-05],
@@ -128,12 +129,12 @@ What about the weights,
 
 ```
 
-We can notice that all weights have the same `absolute value`, some are `positive` and some are `negative` which is kinda weird!!!
+We can notice that all weights have the same `absolute value`, some are `positive` and some are `negative` which is kinda weird.
 
 
-Let's try `reshaping` the weights array to a 2D array of size 68x218 and create an image by turning all negative weights to black pixels and all positive weights to white pixels.
+Let's try `reshaping` the weights array to a 2D array of size 68x218 and creating an image by turning all the negative weights to black pixels and all the positive weights to white pixels.
 
-Here is how you can do it using Pillow Imaging Library
+Here is how you can do it using the Pillow Imaging Library
 ```python
 import keras
 from keras.models import load_model
@@ -176,7 +177,7 @@ Greetz to [@youben11](https://github.com/youben11) for his `great` ideas and con
 
 We already stated in Solution #1 that the output is a value in this interval `[0, 1]` (*Could be interpreted as a probability*)
 
-So, We have a keras model (.hdf5 file) for a neural network with a single scalar output, for which the activation function is `sigmoid`, so the output is just the result of the `sigmoid` function applied to the `weighted sum` of the input layer which appears to be an image with the size of `68x218`, at least it is a 2D array of size 68 by 218.
+So, We have a Keras model (.hdf5 file) for a neural network with a single scalar output, for which the activation function is `sigmoid`, so the output is just the result of the `sigmoid` function applied to the `weighted sum` of the input layer which appears to be an image with the size of `68x218`, at least it is a 2D array of size 68 by 218.
 
 ### <u>About the sigmoid function</u>
 
@@ -219,7 +220,7 @@ in_layer = model.layers[0].input    #input layer shape=(?, 68, 218)
 out_layer = model.layers[1].output  #output layer shape=(?, 1)
 ```
 
-Now, we need to define the gradient and cost functions using keras predefined function
+Now, we need to define the gradient and cost functions using the Keras predefined function
 
 ```python
 
@@ -272,7 +273,7 @@ while True:
 
 The above code will save save all intermediate images as PNG images, You will find your flag in some of the images at an advanced iteration level.
 
-A Better solution to make a `GIF` that show how the flag evolves during time.Here is the code for it. Just make sure you have `Pillow` installed.
+A Better solution to make a `GIF` that shows how the flag evolves in time. Here is the code for it. Just make sure you have `Pillow` installed.
 
 ```python
 """
