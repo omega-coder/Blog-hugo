@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gopher on 0m3g4K0d3r&#39;s Security Blog</title>
+    <link>https://omega-coder.ninja/tags/gopher/</link>
+    <description>Recent content in gopher on 0m3g4K0d3r&#39;s Security Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>admin@omega-coder.me (omega_coder)</managingEditor>
+    <webMaster>admin@omega-coder.me (omega_coder)</webMaster>
+    <lastBuildDate>Mon, 08 Apr 2019 10:59:30 +0200</lastBuildDate>
+    
+	<atom:link href="https://omega-coder.ninja/tags/gopher/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hacklab ESGI 2019 |  Rookie Web100 Writeup</title>
+      <link>https://omega-coder.ninja/post/hacklab-esgi-2019-rookie-web-writeup/</link>
+      <pubDate>Mon, 08 Apr 2019 10:59:30 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/post/hacklab-esgi-2019-rookie-web-writeup/</guid>
+      <description>Challenge Description    Category Points Solves     web 100 18    
+This is the URL for the challenge.
+URL:http://ctf.hacklab-esgi.org:8082/
+So, as soon as we visit the given URL, we get a simple web page saying Website Checker and the title saying super curling (this gonna be fun!!). we notice that there is one input in the page, whatever you give as input gets passed to curl as a parameter.</description>
+    </item>
+    
+  </channel>
+</rss>

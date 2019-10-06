@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on 0m3g4K0d3r&#39;s Security Blog</title>
+    <link>https://omega-coder.ninja/categories/</link>
+    <description>Recent content in Categories on 0m3g4K0d3r&#39;s Security Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <managingEditor>admin@omega-coder.me (omega_coder)</managingEditor>
+    <webMaster>admin@omega-coder.me (omega_coder)</webMaster>
+    <lastBuildDate>Mon, 06 May 2019 14:19:30 +0200</lastBuildDate>
+    
+	<atom:link href="https://omega-coder.ninja/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>INShAck</title>
+      <link>https://omega-coder.ninja/categories/inshack/</link>
+      <pubDate>Mon, 06 May 2019 14:19:30 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/categories/inshack/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>misc</title>
+      <link>https://omega-coder.ninja/categories/misc/</link>
+      <pubDate>Mon, 06 May 2019 14:19:30 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>security</title>
+      <link>https://omega-coder.ninja/categories/security/</link>
+      <pubDate>Mon, 06 May 2019 14:19:30 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>writeups</title>
+      <link>https://omega-coder.ninja/categories/writeups/</link>
+      <pubDate>Mon, 06 May 2019 14:19:30 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/categories/writeups/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>forensics</title>
+      <link>https://omega-coder.ninja/categories/forensics/</link>
+      <pubDate>Sun, 05 May 2019 18:03:05 +0200</pubDate>
+      <author>admin@omega-coder.me (omega_coder)</author>
+      <guid>https://omega-coder.ninja/categories/forensics/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

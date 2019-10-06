@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>AngstromCTF 2019 Secret Sheep Society | CTF Writeup - 0m3g4K0d3r&#39;s Security Blog</title>
+  <meta property="og:title" content="AngstromCTF 2019 Secret Sheep Society | CTF Writeup" />
+  <meta name="twitter:title" content="AngstromCTF 2019 Secret Sheep Society | CTF Writeup" />
+  <meta name="description" content="AES CBC Mode bit-flipping attack">
+  <meta property="og:description" content="AES CBC Mode bit-flipping attack">
+  <meta name="twitter:description" content="AES CBC Mode bit-flipping attack">
+  <meta name="author" content="omega_coder"/><script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "WebSite",
+    "name": "0m3g4K0d3r\x27s Security Blog",
+    
+    "url": "https:\/\/omega-coder.ninja"
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Organization",
+  "name": "",
+  "url": "https:\/\/omega-coder.ninja"
+  
+  
+  
+  
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@id": "https:\/\/omega-coder.ninja",
+          "name": "home"
+        }
+    },{
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@id": "https:\/\/omega-coder.ninja\/post\/angstromctf-2019-secret-sheep-society-writeup-crypto\/",
+          "name": "Angstrom c t f 2019 secret sheep society | c t f writeup"
+        }
+    }]
+}
+</script><script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Article",
+  "author": {
+    "name" : "CHERIEF Yassine"
+  },
+  "headline": "AngstromCTF 2019 Secret Sheep Society | CTF Writeup",
+  "description" : "Challenge details    Category Points Solves     Crypto 120 98    TL;DR  Spotting the weakness (AES with CBC Mode). Get token. Flipping specific bytes in session json (turn false to true ). manipulate token with flipped bytes. Send manipulated token to page. Get the flag.  Challenge Description  The sheep are up to no good. They have a web portal for their secret society, which we have the source for.",
+  "inLanguage" : "en",
+  "wordCount":  1097 ,
+  "datePublished" : "2019-04-24T00:00:00",
+  "dateModified" : "2019-04-24T00:00:00",
+  "image" : "https:\/\/omega-coder.ninja\/img\/profile_pic.jpg",
+  "keywords" : [ "ctf, crypto, bit-flipping, aes, security" ],
+  "mainEntityOfPage" : "https:\/\/omega-coder.ninja\/post\/angstromctf-2019-secret-sheep-society-writeup-crypto\/",
+  "publisher" : {
+    "@type": "Organization",
+    "name" : "https:\/\/omega-coder.ninja",
+    "logo" : {
+        "@type" : "ImageObject",
+        "url" : "https:\/\/omega-coder.ninja\/img\/profile_pic.jpg",
+        "height" :  60 ,
+        "width" :  60
+    }
+  }
+}
+</script>
+
+<meta property="og:title" content="AngstromCTF 2019 Secret Sheep Society | CTF Writeup" />
+<meta property="og:description" content="AES CBC Mode bit-flipping attack">
+<meta property="og:image" content="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_40/v1556114028/082113_1459_cbcbyteflip3.jpg" />
+<meta property="og:url" content="https://omega-coder.ninja/post/angstromctf-2019-secret-sheep-society-writeup-crypto/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="0m3g4K0d3r&#39;s Security Blog" />
+  <meta name="twitter:title" content="AngstromCTF 2019 Secret Sheep Society | CTF Writeup" />
+  <meta name="twitter:description" content="AES CBC Mode bit-flipping attack">
+  <meta name="twitter:image" content="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_40/v1556114028/082113_1459_cbcbyteflip3.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@yacine_cherief" />
+  <meta name="twitter:creator" content="@yacine_cherief" />
+  <link href='https://omega-coder.ninja/img/favicon.ico' rel='icon' type='image/x-icon'/>
+  <meta property="og:image" content="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_40/v1556114028/082113_1459_cbcbyteflip3.jpg" />
+  <meta name="twitter:image" content="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/b_rgb:000000,o_40/v1556114028/082113_1459_cbcbyteflip3.jpg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@yacine_cherief" />
+  <meta name="twitter:creator" content="@yacine_cherief" />
+  <meta property="og:url" content="https://omega-coder.ninja/post/angstromctf-2019-secret-sheep-society-writeup-crypto/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="0m3g4K0d3r&#39;s Security Blog" />
+
+  <meta name="generator" content="Hugo 0.58.3" />
+  <link rel="alternate" href="https://omega-coder.ninja/index.xml" type="application/rss+xml" title="0m3g4K0d3r&#39;s Security Blog"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"><link rel="stylesheet" href="https://omega-coder.ninja/css/prism.css" />
+
+  <link rel="stylesheet" href="https://omega-coder.ninja/css/main.css" /><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" /><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.css" integrity="sha384-h/L2W9KefUClHWaty3SLE5F/qvc4djlyR4qY3NUV5HGQBBW7stbcfff1+I/vmsHh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/default-skin/default-skin.min.css" integrity="sha384-iD0dNku6PYSIQLyfTOpB06F2KCZJAKLOThS5HRe8b3ibhdEQ6eKsFf/EeFxdOt5R" crossorigin="anonymous">
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-126655681-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="https://omega-coder.ninja">0m3g4K0d3r&#39;s Security Blog</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+        
+          
+            <li>
+              <a title="Blog" href="/">Blog</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="Categories" href="/categories">Categories</a>
+            </li>
+          
+        
+          
+            <li>
+              <a title="About" href="/page/about/">About</a>
+            </li>
+          
+        
+
+        
+
+        
+          <li>
+            <a href="#modalSearch" data-toggle="modal" data-target="#modalSearch" style="outline: none;">
+              <span class="hidden-sm hidden-md hidden-lg">Search</span> <span id="searchGlyph" class="glyphicon glyphicon-search"></span>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+
+    
+      <div class="avatar-container">
+        <div class="avatar-img-border">
+          <a title="0m3g4K0d3r&#39;s Security Blog" href="https://omega-coder.ninja">
+            <img class="avatar-img" src="https://omega-coder.ninja/img/profile_pic.jpg" alt="0m3g4K0d3r&#39;s Security Blog" />
+          </a>
+        </div>
+      </div>
+    
+
+  </div>
+</nav>
+
+
+
+  <div id="modalSearch" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Search 0m3g4K0d3r&#39;s Security Blog</h4>
+        </div>
+        <div class="modal-body">
+          <gcse:search></gcse:search>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    
+
+
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+<div class="pswp__bg"></div>
+
+<div class="pswp__scroll-wrap">
+    
+    <div class="pswp__container">
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+      <div class="pswp__item"></div>
+    </div>
+    
+    <div class="pswp__ui pswp__ui--hidden">
+    <div class="pswp__top-bar">
+      
+      <div class="pswp__counter"></div>
+      <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+      <button class="pswp__button pswp__button--share" title="Share"></button>
+      <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+      <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+      
+      
+      <div class="pswp__preloader">
+        <div class="pswp__preloader__icn">
+          <div class="pswp__preloader__cut">
+            <div class="pswp__preloader__donut"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+      <div class="pswp__share-tooltip"></div>
+    </div>
+    <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+    </button>
+    <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+    </button>
+    <div class="pswp__caption">
+      <div class="pswp__caption__center"></div>
+    </div>
+    </div>
+    </div>
+</div>
+
+
+  
+  
+  
+
+
+
+
+
+
+  
+
+  <header class="header-section ">
+    
+    <div class="intro-header no-img">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <div class="post-heading">
+              
+                <h1>AngstromCTF 2019 Secret Sheep Society | CTF Writeup</h1>
+              
+              
+              
+                
+                  <h2 class="post-subheading">AES CBC Mode bit-flipping attack</h2>
+                
+              
+              
+                <span class="post-meta">
+  
+  
+  <i class="fas fa-calendar"></i>&nbsp;Posted on April 24, 2019
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-clock"></i>&nbsp;6&nbsp;minutes
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-book"></i>&nbsp;1097&nbsp;words
+  
+  
+    &nbsp;|&nbsp;<i class="fas fa-user"></i>&nbsp;CHERIEF Yassine
+  
+  
+</span>
+
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+    
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <article role="main" class="blog-post">
+        
+
+<h2 id="challenge-details">Challenge details</h2>
+
+<table>
+<thead>
+<tr>
+<th align="right"><strong>Category</strong></th>
+<th align="right"><strong>Points</strong></th>
+<th align="right"><strong>Solves</strong></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="right">Crypto</td>
+<td align="right">120</td>
+<td align="right">98</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="tl-dr">TL;DR</h1>
+
+<ul>
+<li>Spotting the weakness (AES with CBC Mode).</li>
+<li>Get token.</li>
+<li>Flipping specific bytes in session json (turn false to true ).</li>
+<li>manipulate token with flipped bytes.</li>
+<li>Send manipulated token to page.</li>
+<li>Get the flag.</li>
+</ul>
+
+<h2 id="challenge-description">Challenge Description</h2>
+
+<blockquote>
+<p>The sheep are up to no good. They have a <a href="https://secretsheepsociety.2019.chall.actf.co/">web portal</a> for their secret society, which we have the source for. It seems fairly easy to join the organization, but climbing up its ranks is a different story. <br>Author: defund</p>
+</blockquote>
+
+<h2 id="challenge-source">Challenge Source</h2>
+
+<p>challenge app source can be found <a href="https://github.com/omega-coder/ctf-writeups/tree/master/AngstromCTF_2k19_Quals/Secret_Sheep_Society/app_source">here</a></p>
+
+<h2 id="what-is-the-app-doing">What is the app doing</h2>
+
+<p>we have three important routes <code>/</code>, <code>/enter</code> and <code>/exit</code>.</p>
+
+<ul>
+<li><code>/</code> will show the flag if we have admin access.</li>
+<li><code>/enter</code> accepts an input called <code>handle</code> and sets a cookie named <code>token</code> which is simply the base64 encoding of the <code>session</code> encryption using <code>AES</code> with <code>CBC</code> Mode and using Padding also.</li>
+<li><code>/exit</code> will simply <strong>unset</strong> the <strong><code>token</code></strong> cookie.</li>
+</ul>
+
+<h3 id="we-know">We know</h3>
+
+<ol>
+<li>the format of the session which is : <code>{&quot;admin&quot;: false, &quot;handle&quot;: &quot;some_input_we_control&quot;}</code></li>
+<li>encryption is using <code>AES_CBC</code> with <code>BLOCK_SIZE = 16</code>.</li>
+<li>We have the ciphertext.
+<br /></li>
+</ol>
+
+<h3 id="we-don-t-know">We don&rsquo;t know</h3>
+
+<ol>
+<li>The Key.</li>
+</ol>
+
+<p><strong><code>NOTE: I haven't used the browser for this task, i still don't know what the UI looks like!!</code></strong></p>
+
+<p>let&rsquo;s see this piece of code:</p>
+
+<pre><code class="language-python">@app.route('/enter', methods=['POST'])
+def enter():
+	handle = request.form.get('handle')
+	session = {
+		'admin': False,
+		'handle': handle
+	}
+	token = manager.pack(session)
+	response = redirect('/')
+	response.set_cookie('token', token)
+    return response
+</code></pre>
+
+<p>To get a cookie we post to <code>/enter</code> with handle data parameter set to anything we want, after that the session variable gets set and passed to <code>manager.pack(session)</code> which will return a token base64 encoded.</p>
+
+<p>Let&rsquo;s see now how does the pack method works. (.pack is defined in <code>manage.py file</code>).<br />
+<strong>pack()</strong> takes a python dictionary as an argument and return a base64 encoded token.</p>
+
+<pre><code class="language-python">class Manager:
+
+	BLOCK_SIZE = AES.block_size
+
+	def __init__(self, key):
+		self.key = key
+
+	def pack(self, session):
+		cipher = AES.new(self.key, AES.MODE_CBC)
+		iv = cipher.iv
+		dec = json.dumps(session).encode()
+		enc = cipher.encrypt(pad(dec, self.BLOCK_SIZE))
+		raw = iv + enc
+        return base64.b64encode(raw)
+</code></pre>
+
+<ol>
+<li>creates a new AES cipher with CBC mode</li>
+<li>get an IV</li>
+<li>get string representation of the json object session.</li>
+<li>pad data and encrypt it with <code>AES_CBC</code>.</li>
+<li>return <code>base64(iv + enc)</code>.</li>
+</ol>
+
+<blockquote>
+<p><strong><code>Note: iv is not encrypted, the IV is the first 16 bytes of the token found in cookie</code></strong></p>
+</blockquote>
+
+<p>Our string representation of the session json object is as follow:</p>
+
+<p>This is the default json object string repr that we will have, provided that we enter <code>xx</code> as handle paramter. (Only an example).</p>
+
+<pre><code class="language-json">{&quot;admin&quot;: false, &quot;handle&quot;: &quot;xx&quot;}
+</code></pre>
+
+<p>We obviously need to turn that <code>false</code> to <code>true&nbsp;</code>, since <code>false</code> is 5 bytes long and <code>true</code> is only 4 bytes long, we can replace <code>false</code> with <code>true&nbsp;</code> with an extra space at the end, that won&rsquo;t make a difference when parser by JSON.</p>
+
+<p>if we provide handle with value <code>xx</code> then json string representation will be on exactly two blocks.
+(<code>32 Bytes</code>).</p>
+
+<p>The AES encryption will be 64 Bytes (4 Blocks of 16 bytes each), because IV is on 16 bytes, json string on 32 Bytes and padding on One block (16 Bytes)</p>
+
+<p><code>16 + 32 + 16 = 64</code></p>
+
+<pre><code>.................. = IV (IV is known to us)
+{&quot;admin&quot;: false,   ==&gt; First Plaintext Block
+ &quot;handle&quot;: &quot;xx&quot;}   ==&gt; Second Plaintext Block
+\x10\x10\x10\x10 ... \x10 ==&gt; last padding block of size 16 
+
+</code></pre>
+
+<p>Now let&rsquo;s do bit-flipping and change the  <code>false</code> to <code>true&nbsp;</code>.</p>
+
+<p>To understand the attack, we need to closely look how decryption takes place in this mode:</p>
+
+<p><img src="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1556110161/601px-cbc_decryption-svg.png" alt="aes_cbc_decryption_scheme" /></p>
+
+<p>Let&rsquo;s suppose our <code>{&quot;admin&quot;: false,</code> is our first block, this plaintext block is resulting from <code>XORing</code> the IV (Initialization Vector) with the first ciphertext block, as you can see from the figure above.We can manipulate the cookie returned by the server to forge a cookie that we decoded get json encoded to <code>{&quot;admin&quot;: true , &quot;handle&quot;: &quot;xx&quot;}</code>. A rule says that whenever you change one byte (&lsquo;flips&rsquo;) at an offset
+in a given ciphertext block, the same offset is changed in the next plaintext block (see figure below).</p>
+
+<p><img src="https://res.cloudinary.com/https-omega-coder-github-io/image/upload/v1556114028/082113_1459_cbcbyteflip3.jpg" alt="cbc_flip_byte" /></p>
+
+<h2 id="fully-automated-exploit-with-python">Fully Automated Exploit with Python</h2>
+
+<p>let&rsquo;s first try to get a token by posting handle data to <code>/enter</code></p>
+
+<pre><code>import requests
+import re
+URL = &quot;https://secretsheepsociety.2019.chall.actf.co/&quot;
+
+session = requests.Session()
+
+# generate token from /enter route 
+token = None
+enter_data = {&quot;handle&quot;: &quot;xx&quot;}
+print(&quot;[+] Sending 'xx' as handle payload!&quot;)
+token_exp = re.compile(r'token=(.*);')
+req = session.post(URL+&quot;enter&quot;, data=enter_data, verify=False, allow_redirects=False)
+print(&quot;[?] Made request to /enter&quot;)
+if req.status_code == 302: # means we are being redirected to / 
+    print(&quot;[?] Got 302 Redirect request&quot;)
+    match = re.search(token_exp, req.headers[&quot;Set-Cookie&quot;])
+    if match:
+        token = match.group(1)
+        print(&quot;[+] Got token : &quot;, token)
+</code></pre>
+
+<p>Now let&rsquo;s see the full script that will get a token from <code>/enter</code> and manipulate it and send it back to man route (index.html) to get the final flag.</p>
+
+<pre><code class="language-python">import requests
+from base64 import b64encode, b64decode
+import re
+URL = &quot;https://secretsheepsociety.2019.chall.actf.co/&quot;
+
+session = requests.Session()
+
+# generate token from /enter route 
+token = None
+enter_data = {&quot;handle&quot;: &quot;xx&quot;}
+# xx is just to make it 2 blocks in size
+print(&quot;[+] Sending 'xx' as handle payload!&quot;)
+token_exp = re.compile(r'token=(.*);')
+req = session.post(URL+&quot;enter&quot;, data=enter_data, verify=False, allow_redirects=False)
+# allow redirects is set to False because if set to True we won't be able to retrive
+# the cookie set by /enter
+
+print(&quot;[?] Made request to /enter&quot;)
+if req.status_code == 302: # we are being redirected to /
+    print(&quot;[?] Got 302 Redirect request&quot;)
+    match = re.search(token_exp, req.headers[&quot;Set-Cookie&quot;])
+    if match:
+        token = match.group(1)
+        print(&quot;[+] Got token : &quot;, token)
+
+# 'f' is located at offset 10 in the second block.
+# 'a' is located at offset 11 in the second block.
+# 'l' ....
+# 's' ....
+# 'e' ....
+if token is not None:
+    ct = b64decode(token)
+    manipulated_token = list(ct)
+    manipulated_token[10] = manipulated_token[10] ^ ord('f') ^ ord('t')
+    manipulated_token[11] = manipulated_token[11] ^ ord('a') ^ ord('r')
+    manipulated_token[12] = manipulated_token[12] ^ ord('l') ^ ord('u')
+    manipulated_token[13] = manipulated_token[13] ^ ord('s') ^ ord('e')
+    manipulated_token[14] = manipulated_token[14] ^ ord('e') ^ ord(' ')
+    print(&quot;[+] Flipped Bytes 10, 11, 12, 13 and 14&quot;)
+
+    final_token = b64encode(bytes(manipulated_token))
+
+    print(&quot;[+] generated new token &quot;, final_token.decode())
+
+if final_token is not None:
+    session = requests.Session()
+    cookies = {&quot;token&quot;: final_token.decode()}
+    
+    # if token is correct then session will contain {&quot;admin&quot;: True, &quot;handle&quot;: &quot;xx&quot;} 
+    # we will be able to get the flag
+
+    flag_exp = re.compile(r'actf{.*}')
+    req = session.get(URL, cookies=cookies)
+    if req.status_code == 200:
+        m = re.search(flag_exp, req.text)
+        if m:
+            print(&quot;[+] FLAG: &quot;, m.group(0))
+</code></pre>
+
+<p>Note: This worked because the block we wanted to manipulate was the second block, which we can of course manipulate using the IV block only, if it was another different block then the solution would be a little harder than this.</p>
+
+<p><code>FLAG = actf{shep_the_conqueror_slumbers}</code></p>
+
+
+        
+          <div class="blog-tags">
+            
+              <a href="https://omega-coder.ninja/tags/ctf/">ctf</a>&nbsp;
+            
+              <a href="https://omega-coder.ninja/tags/crypto/">crypto</a>&nbsp;
+            
+              <a href="https://omega-coder.ninja/tags/bit-flipping/">bit-flipping</a>&nbsp;
+            
+              <a href="https://omega-coder.ninja/tags/aes/">aes</a>&nbsp;
+            
+              <a href="https://omega-coder.ninja/tags/security/">security</a>&nbsp;
+            
+          </div>
+        
+
+        
+            <hr/>
+            <section id="social-share">
+              <div class="list-inline footer-links">
+                
+
+<div class="share-box" aria-hidden="true">
+    <ul class="share">
+      
+      <li>
+        <a href="//twitter.com/share?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f&amp;text=AngstromCTF%202019%20Secret%20Sheep%20Society%20%7c%20CTF%20Writeup&amp;via=yacine_cherief" target="_blank" title="Share on Twitter">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//plus.google.com/share?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f" target="_blank" title="Share on Google Plus">
+          <i class="fab fa-google-plus"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f" target="_blank" title="Share on Facebook">
+          <i class="fab fa-facebook"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//reddit.com/submit?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f&amp;title=AngstromCTF%202019%20Secret%20Sheep%20Society%20%7c%20CTF%20Writeup" target="_blank" title="Share on Reddit">
+          <i class="fab fa-reddit"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f&amp;title=AngstromCTF%202019%20Secret%20Sheep%20Society%20%7c%20CTF%20Writeup" target="_blank" title="Share on LinkedIn">
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.stumbleupon.com/submit?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f&amp;title=AngstromCTF%202019%20Secret%20Sheep%20Society%20%7c%20CTF%20Writeup" target="_blank" title="Share on StumbleUpon">
+          <i class="fab fa-stumbleupon"></i>
+        </a>
+      </li>
+  
+      
+      <li>
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fomega-coder.ninja%2fpost%2fangstromctf-2019-secret-sheep-society-writeup-crypto%2f&amp;description=AngstromCTF%202019%20Secret%20Sheep%20Society%20%7c%20CTF%20Writeup" target="_blank" title="Share on Pinterest">
+          <i class="fab fa-pinterest"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+              </div>
+            </section>
+        
+
+        
+          
+          
+          <h4 class="see-also">See also</h4>
+          <ul>
+          
+            <li><a href="/post/hacklab-esgi-2019-rookie-web-writeup/">Hacklab ESGI 2019 |  Rookie Web100 Writeup</a></li>
+          
+            <li><a href="/post/securinets-ctf-2019-lost-flag-writeup/">Securinets CTF 2k19 Lost Flag Writeup</a></li>
+          
+          </ul>
+          
+        
+      </article>
+
+      
+        <ul class="pager blog-pager">
+          
+            <li class="previous">
+                <a href="https://omega-coder.ninja/post/hacklab-esgi-2019-rookie-web-writeup/" data-toggle="tooltip" data-placement="top" title="Hacklab ESGI 2019 |  Rookie Web100 Writeup">&larr; Hacklab ESGI 2019 |  Rookie …</a>
+            </li>
+          
+          
+            <li class="next">
+                <a href="https://omega-coder.ninja/post/angstromctf-2019-no-sequels-and-no-sequels2-web-writeup/" data-toggle="tooltip" data-placement="top" title="AngstromCTF 2019 | No SEQUELS and No SEQUELS 2 Web Writeup">AngstromCTF 2019 | No SEQUELS … &rarr;</a>
+            </li>
+          
+        </ul>
+      
+
+
+      
+        
+          
+          <div class="disqus-comments">
+            <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "omega-coder" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          </div>
+          
+        
+        
+      
+
+    </div>
+  </div>
+</div>
+
+    <footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links">
+          
+              <li>
+                <a href="mailto:admin@omega-coder.me" title="Email me">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.facebook.com/yacinewebdz" title="Facebook">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/omega-coder" title="GitHub">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://twitter.com/yacine_cherief" title="Twitter">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/omega_coder" title="Instagram">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/channel/UCJ84GVWJlcEjLVckwgtH58g" title="Youtube">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="https://open.spotify.com/user/omega_coder" title="Spotify">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-spotify fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+          
+          <li>
+            
+            <a href="https://omega-coder.ninja/index.xml" title="RSS">
+            
+              <span class="fa-stack fa-lg">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+          
+        </ul>
+        <p class="credits copyright text-muted">
+          
+            
+              <a href="https://omega-coder.ninja">omega_coder</a>
+            
+          
+
+          &nbsp;&bull;&nbsp;&copy;
+          
+            2019
+          
+
+          
+            &nbsp;&bull;&nbsp;
+            <a href="https://omega-coder.ninja">0m3g4K0d3r&#39;s Security Blog</a>
+          
+        </p>
+        
+        <p class="credits theme-by text-muted">
+          <a href="http://gohugo.io">Hugo v0.58.3</a> powered &nbsp;&bull;&nbsp; Theme by <a href="http://deanattali.com/beautiful-jekyll/">Beautiful Jekyll</a> adapted to <a href="https://github.com/halogenica/beautifulhugo">Beautiful Hugo</a>
+          
+        </p>
+      </div>
+    </div>
+  </div>
+</footer><script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.js" integrity="sha384-K3vbOmF2BtaVai+Qk37uypf7VrgBubhQreNQe9aGsz9lB63dIFiQVlJbr92dw2Lx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/contrib/auto-render.min.js" integrity="sha384-kmZOZB5ObwgQnS/DuDg6TScgOiWWBiVt0plIRkZCmE6rDZGrEOQeHM5PcHi+nyqe" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://omega-coder.ninja/js/main.js"></script><script> renderMathInElement(document.body); </script>
+<script src="https://omega-coder.ninja/js/prism.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe.min.js" integrity="sha384-QELNnmcmU8IR9ZAykt67vGr9/rZJdHbiWi64V88fCPaOohUlHCqUD/unNN0BXSqy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.2/photoswipe-ui-default.min.js" integrity="sha384-m67o7SkQ1ALzKZIFh4CiTA8tmadaujiTa9Vu+nqPSwDOqHrDmxLezTdFln8077+q" crossorigin="anonymous"></script><script src="https://omega-coder.ninja/js/load-photoswipe.js"></script>
+
+
+
+<script>
+  (function() {
+    var cx = '003875270731666154786:4mbkqyjjjjy';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+
+
+
+
+
+
+
+  </body>
+</html>
+
