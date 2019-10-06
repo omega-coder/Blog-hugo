@@ -1,4 +1,4 @@
-baseurl = "https://omega-coder.me"
+baseurl = "https://omega-coder.ninja"
 DefaultContentLanguage = "en"
 title = "0m3g4K0d3r's Security Blog"
 theme = "beautifulhugo"
@@ -45,7 +45,7 @@ publishdir = "omega-coder.github.io"
 
 [Author]
   name = "omega_coder"
-  website = "https://omega-coder.me"
+  website = "https://omega-coder.ninja"
   email = "admin@omega-coder.me"
   facebook = "yacinewebdz"
   #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
