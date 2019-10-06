@@ -11,7 +11,7 @@ metaDataFormat = "yaml"
 #pygmentOptions="linenos=inline"
 disqusShortname = "omega-coder"
 googleAnalytics = "UA-126655681-1"
-publishdir = "omega-coder.github.io"
+publishdir = "public"
 
 [Params]
   homeTitle = "Omega-coder's Blog"
@@ -46,7 +46,7 @@ publishdir = "omega-coder.github.io"
 [Author]
   name = "omega_coder"
   website = "https://omega-coder.ninja"
-  email = "admin@omega-coder.me"
+  email = "fy_cherief@esi.dz"
   facebook = "yacinewebdz"
   #googleplus = "+username" # or xxxxxxxxxxxxxxxxxxxxx
   github = "omega-coder"
